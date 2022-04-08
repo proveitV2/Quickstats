@@ -11,6 +11,9 @@ import { draw_on } from './DrawFeatures';
 import LocateUser from './custom_tools/locateUser';
 import { ScaleLine } from 'ol/control';
 import MeasuringTool from './custom_tools/measuringTool';
+import baseMapSwitcher from './June/basemapswitcher';
+import basemapSwitcher from './June/basemapswitcher';
+
 proj4.defs(
   'EPSG:27700',
   '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 ' +
@@ -214,3 +217,6 @@ map.addControl(scaleBar);
 
 const measuringTool = new MeasuringTool({ map: map });
 map.addControl(measuringTool);
+
+const baseMaps = new basemapSwitcher({ map: map, view: mapView });
+// map.addControl(baseMaps);

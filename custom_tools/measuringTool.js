@@ -50,7 +50,8 @@ class MeasuringTool extends Control {
     document
       .getElementById('stp-drw-btn')
       .addEventListener('click', (event) => {
-        map.removeInteraction(draw);
+        // map.removeInteraction(draw);
+        options.map.removeInteraction(draw);
       });
   }
   launchModal(map) {
