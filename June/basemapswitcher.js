@@ -9,7 +9,7 @@ const OSMHumanitarian = "./Basemaps/OSM_humanitarian.png";
 const stamenTo = "./Basemaps/stamentoner.png";
 const stamenWC = "./Basemaps/stamenWatercolor.png";
 const stamenTe = "./Basemaps/stamenTerrain.png";
-const esriSt = "./Basemaps/Esri.png"
+const esriSt = "./Basemaps/esri.png"
 
 //BASEMAP SWITCHER TOOL
 class basemapSwitcher extends Control{
@@ -20,17 +20,16 @@ class basemapSwitcher extends Control{
         const options = opt_options || {};
         const button = document.createElement('button');
         Object.assign(button,{
-            className: "btn btn-secondary dropdown-toggle",
+            className: "button",
             type: "button",
-            id: "dropdownMenuButton",
-            ariaExpanded: "false",
+            id: "dropdownMenuButton"
         })
-        button.setAttribute("data-toggle", "dropdown");
+        // button.setAttribute("data-toggle", "dropdown");
     
-        button.innerHTML='Basemap Switcher';
+        button.innerHTML='B';
 
         const dropdown = document.createElement('div');
-        dropdown.className = 'dropdown';
+        dropdown.className = 'button ol-unselectable ol-control';
         dropdown.appendChild(button);
 
         const dropdownMenu = document.createElement('ul');

@@ -152,4 +152,22 @@ html, body {
 .ol-tooltip-static:before {
   border-top-color: #ffcc33;
 }
+
+
+.dropdown-menu li:hover {
+  background-color: rgb(172, 166, 177);
+}
+
+.dropdown-menu li {
+  font-size: small;
+  display: inline-block;
+  text-align: center;
+  padding: 5px;
+}
+
+.dropdown-menu {
+  padding: 20px;
+  background-color: rgb(229, 238, 235);
+}
+
 /*-------------------------------------------------------------------------*/

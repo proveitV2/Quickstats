@@ -11,7 +11,6 @@ import { draw_on } from './DrawFeatures';
 import LocateUser from './custom_tools/locateUser';
 import { ScaleLine } from 'ol/control';
 import MeasuringTool from './custom_tools/measuringTool';
-import baseMapSwitcher from './June/basemapswitcher';
 import basemapSwitcher from './June/basemapswitcher';
 
 proj4.defs(
@@ -219,4 +218,4 @@ const measuringTool = new MeasuringTool({ map: map });
 map.addControl(measuringTool);
 
 const baseMaps = new basemapSwitcher({ map: map, view: mapView });
-// map.addControl(baseMaps);
+map.addControl(baseMaps);
