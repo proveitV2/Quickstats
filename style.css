@@ -153,6 +153,7 @@ html, body {
   border-top-color: #ffcc33;
 }
 
+/* BASEMAP SWITCHER TOOL */
 
 .dropdown-menu li:hover {
   background-color: rgb(172, 166, 177);
@@ -170,4 +171,8 @@ html, body {
   background-color: rgb(229, 238, 235);
 }
 
+.dropdown {
+  top: 170px;
+  left: 0.5em;
+}
 /*-------------------------------------------------------------------------*/

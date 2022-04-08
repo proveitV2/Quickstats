@@ -4,12 +4,13 @@ import { openStreetMapStandard, openStreetMapHumanitarian, stamenToner,
 stamenWatercolor, stamenTerrain, esriStandard} from './basemaps';
 
 //BASE MAP IMAGES 
-const OSMMap = "./Basemaps/OSM_map.png";
-const OSMHumanitarian = "./Basemaps/OSM_humanitarian.png";
-const stamenTo = "./Basemaps/stamentoner.png";
-const stamenWC = "./Basemaps/stamenWatercolor.png";
-const stamenTe = "./Basemaps/stamenTerrain.png";
-const esriSt = "./Basemaps/esri.png"
+const OSMMap = "./June/Basemaps/OSM_map.png";
+const OSMHumanitarian = "./June/Basemaps/OSM_humanitarian.png";
+const stamenTo = "./June/Basemaps/stamentoner.png";
+const stamenWC = "./June/Basemaps/stamenWatercolor.png";
+const stamenTe = "./June/Basemaps/stamenTerrain.png";
+const esriSt = "./June/Basemaps/esri.png"
+
 
 //BASEMAP SWITCHER TOOL
 class basemapSwitcher extends Control{
@@ -20,16 +21,17 @@ class basemapSwitcher extends Control{
         const options = opt_options || {};
         const button = document.createElement('button');
         Object.assign(button,{
-            className: "button",
+            className: "btn",
             type: "button",
-            id: "dropdownMenuButton"
+            id: "dropdownMenuButton",
+            ariaExpanded: "false",
         })
-        // button.setAttribute("data-toggle", "dropdown");
+        button.setAttribute("data-toggle", "dropdown");
     
         button.innerHTML='B';
 
         const dropdown = document.createElement('div');
-        dropdown.className = 'button ol-unselectable ol-control';
+        dropdown.className = 'dropdown ol-unselectable ol-control';
         dropdown.appendChild(button);
 
         const dropdownMenu = document.createElement('ul');
@@ -213,7 +215,7 @@ class basemapSwitcher extends Control{
             border: "double",
         })
 
-        dropdownList6.innerHTML="Stamen Watercolor <br>";
+        dropdownList6.innerHTML="Esri Standard <br>";
         dropdownList6.appendChild(dropdownInput6);
 
         super({
