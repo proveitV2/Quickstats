@@ -81,6 +81,15 @@ class MeasuringTool extends Control {
       }),
     });
     map.addLayer(vector);
+
+    document
+      .getElementById('del-drw-btn')
+      .addEventListener('click', (event) => {
+        // delete current measuraments
+        source.clear();
+        $('.ol-tooltip').remove();
+      });
+
     /**
      * Currently drawn feature.
      * @type {import("../src/ol/Feature.js").default}
@@ -194,6 +203,7 @@ class MeasuringTool extends Control {
       draw = new Draw({
         source: source,
         type: type,
+        stopClick: true,
         style: new Style({
           fill: new Fill({
             color: 'rgba(255, 255, 255, 0.2)',

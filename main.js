@@ -1,17 +1,34 @@
-import './style.css';
+import './assets/css/style.css';
+import 'ol-layerswitcher/src/ol-layerswitcher.css';
 import { Map, View } from 'ol';
 import { register } from 'ol/proj/proj4';
 import proj4 from 'proj4';
 import MousePosition from 'ol/control/MousePosition';
 import * as olCoordinate from 'ol/coordinate';
 import { defaults } from 'ol/interaction';
-import { baseMap, lineLayer, pointLayer } from './layerConnections';
-import drawFeatureButton from './DrawFeatures';
-import { draw_on } from './DrawFeatures';
+import {
+  Bollards,
+  Networked_Asset,
+  Marker_Posts_combined_April_2022 as MarkerPost,
+  Weather_Station,
+  pointLayer,
+  lineLayer,
+} from './assets/js/layers/layerConnections';
+import drawFeatureButton from './custom_tools/DrawFeatures';
+import { draw_on } from './custom_tools/DrawFeatures';
 import LocateUser from './custom_tools/locateUser';
 import { ScaleLine } from 'ol/control';
 import MeasuringTool from './custom_tools/measuringTool';
-import basemapSwitcher from './June/basemapswitcher';
+import LayerSwitcherImage from 'ol-ext/control/LayerSwitcher';
+import { Group as LayerGroup } from 'ol/layer';
+import {
+  openStreetMapStandard,
+  openStreetMapHumanitarian,
+  stamenToner,
+  stamenWatercolor,
+  stamenTerrain,
+  esriStandard,
+} from './assets/js/basemaps/basemaps.js';
 
 proj4.defs(
   'EPSG:27700',
@@ -22,7 +39,6 @@ proj4.defs(
 );
 register(proj4);
 
-const layers = [baseMap]; //, pointLayer, lineLayer];
 let QUERY_LAYERS = '';
 
 let mapView = new View({
@@ -33,12 +49,34 @@ let mapView = new View({
 
 const map = new Map({
   target: 'map',
-  layers: layers,
+  layers: [
+    new LayerGroup({
+      title: 'Base maps',
+      layers: [openStreetMapStandard, esriStandard, stamenTerrain],
+    }),
+    new LayerGroup({
+      title: 'Area 3 quickSTATS',
+      openInLayerSwitcher: true,
+
+      layers: [
+        Bollards,
+        Networked_Asset,
+        MarkerPost,
+        Weather_Station,
+        pointLayer,
+        lineLayer,
+      ],
+    }),
+  ],
   view: mapView,
   interactions: defaults({ doubleClickZoom: false }), // disables double click zoom
 });
+
+map.addControl(new LayerSwitcherImage({}));
+
 const layerArray = map.getLayers().getArray();
-layerArray.forEach((layer) => {
+console.log(layerArray);
+layerArray[1].values_.layers.array_.forEach((layer) => {
   let layerParams = layer.getSource().params_;
   if (layerParams) {
     QUERY_LAYERS += layerParams.LAYERS + ',';
@@ -216,6 +254,3 @@ map.addControl(scaleBar);
 
 const measuringTool = new MeasuringTool({ map: map });
 map.addControl(measuringTool);
-
-const baseMaps = new basemapSwitcher({ map: map, view: mapView });
-map.addControl(baseMaps);
