@@ -1,6 +1,7 @@
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import TileWMS from 'ol/source/TileWMS';
+import ImageWMS from 'ol/source/ImageWMS';
 
 export const Bollards = new TileLayer({
   title: 'Bollards',
@@ -71,4 +72,11 @@ export const lineLayer = new TileLayer({
     serverType: 'geoserver',
     transition: 0,
   }),
+});
+
+export const webAppLayers = new ImageWMS({
+  url: 'http://D-S4L69766:8080/geoserver/wms',
+  params: { LAYERS: 'quickstats:quickSTATS' },
+  ratio: 1,
+  serverType: 'geoserver',
 });

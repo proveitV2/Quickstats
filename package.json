@@ -14,7 +14,9 @@
     "express": "^4.17.2",
     "ol": "latest",
     "ol-ext": "^3.2.18",
+    "ol-geocoder": "^4.1.2",
     "ol-layerswitcher": "^3.8.3",
+    "ol-popup": "^4.0.0",
     "pg": "^8.7.1",
     "proj4": "^2.7.5",
     "sweetalert": "^2.1.2"

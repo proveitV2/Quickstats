@@ -1,5 +1,6 @@
 import './assets/css/style.css';
 import 'ol-layerswitcher/src/ol-layerswitcher.css';
+import 'ol-geocoder/dist/ol-geocoder.css';
 import { Map, View } from 'ol';
 import { register } from 'ol/proj/proj4';
 import proj4 from 'proj4';
@@ -13,6 +14,7 @@ import {
   Weather_Station,
   pointLayer,
   lineLayer,
+  webAppLayers,
 } from './assets/js/layers/layerConnections';
 import drawFeatureButton from './custom_tools/DrawFeatures';
 import { draw_on } from './custom_tools/DrawFeatures';
@@ -29,6 +31,9 @@ import {
   stamenTerrain,
   esriStandard,
 } from './assets/js/basemaps/basemaps.js';
+import Legend from './custom_tools/Legend';
+import Geocoder from 'ol-geocoder';
+import Popup from 'ol-popup/src/ol-popup';
 
 proj4.defs(
   'EPSG:27700',
@@ -74,8 +79,49 @@ const map = new Map({
 
 map.addControl(new LayerSwitcherImage({}));
 
+// let currZoom = map.getView().getZoom();
+// map.on('moveend', (e) => {
+//   let newZoom = map.getView().getZoom();
+//   if (currZoom != newZoom) {
+//     console.log('zoom end, new zoom: ' + newZoom);
+//     currZoom = newZoom;
+//   }
+// });
+// let layersListForLegend = [];
+// const layerArray = map.getLayers().getArray();
+// layerArray[1].values_.layers.array_.map((layer) => {
+//   let layerParams = layer.getSource().params_;
+//   layersListForLegend.push(layer.ol_uid);
+//   console.log(layer.values_.minZoom);
+//   console.log(layer);
+//   const legend = document.getElementsByClassName('figure');
+//   const symbols = document.createElement('img');
+//   symbols.setAttribute(
+//     'src',
+//     layer.getSource().getLegendUrl(undefined, layerParams)
+//   );
+//   symbols.setAttribute('class', 'rounded float-left');
+
+//   legend.item(0).appendChild(symbols);
+// });
+
+// const updateLegend = function (resolution) {
+//   const graphicUrl = webAppLayers.getLegendUrl(resolution);
+//   const img = document.getElementById('legend');
+//   img.src = graphicUrl;
+// };
+// const resolution = map.getView().getResolution();
+// updateLegend(resolution);
+
+// // Update the legend when the resolution changes
+// map.getView().on('change:resolution', function (event) {
+//   const resolution = event.target.getResolution();
+//   updateLegend(resolution);
+// });
+
+map.addControl(new Legend({ map: map, view: mapView }));
+
 const layerArray = map.getLayers().getArray();
-console.log(layerArray);
 layerArray[1].values_.layers.array_.forEach((layer) => {
   let layerParams = layer.getSource().params_;
   if (layerParams) {
@@ -254,3 +300,26 @@ map.addControl(scaleBar);
 
 const measuringTool = new MeasuringTool({ map: map });
 map.addControl(measuringTool);
+
+//Instantiate with some options and add the Control
+let geocoder = new Geocoder('nominatim', {
+  provider: 'osm',
+  lang: 'en',
+  placeholder: 'Search for ...',
+  limit: 5,
+  debug: false,
+  autoComplete: true,
+  keepOpen: true,
+});
+
+let popup = new Popup();
+map.addControl(geocoder);
+map.addOverlay(popup);
+
+//Listen when an address is chosen
+geocoder.on('addresschosen', function (evt) {
+  console.info(evt);
+  window.setTimeout(function () {
+    popup.show(evt.coordinate, evt.address.formatted);
+  }, 3000);
+});
