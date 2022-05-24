@@ -1,4 +1,5 @@
 import './assets/css/style.css';
+import './node_modules/ol-ext/dist/ol-ext.css';
 import 'ol-layerswitcher/src/ol-layerswitcher.css';
 import 'ol-geocoder/dist/ol-geocoder.css';
 import { Map, View } from 'ol';
@@ -14,7 +15,8 @@ import {
   Weather_Station,
   pointLayer,
   lineLayer,
-  webAppLayers,
+  marker_layer,
+  Marker_Post_Vector_source,
 } from './assets/js/layers/layerConnections';
 import drawFeatureButton from './custom_tools/DrawFeatures';
 import { draw_on } from './custom_tools/DrawFeatures';
@@ -25,15 +27,16 @@ import LayerSwitcherImage from 'ol-ext/control/LayerSwitcher';
 import { Group as LayerGroup } from 'ol/layer';
 import {
   openStreetMapStandard,
-  openStreetMapHumanitarian,
-  stamenToner,
-  stamenWatercolor,
   stamenTerrain,
   esriStandard,
 } from './assets/js/basemaps/basemaps.js';
 import Legend from './custom_tools/Legend';
-import Geocoder from 'ol-geocoder';
 import Popup from 'ol-popup/src/ol-popup';
+import { geocode, reverseGeocode } from '@esri/arcgis-rest-geocoding';
+import { ApiKeyManager } from '@esri/arcgis-rest-request';
+import SearchFeature from 'ol-ext/control/SearchFeature';
+import Select from 'ol/interaction/Select';
+import { response } from 'express';
 
 proj4.defs(
   'EPSG:27700',
@@ -302,24 +305,235 @@ const measuringTool = new MeasuringTool({ map: map });
 map.addControl(measuringTool);
 
 //Instantiate with some options and add the Control
-let geocoder = new Geocoder('nominatim', {
-  provider: 'osm',
-  lang: 'en',
-  placeholder: 'Search for ...',
-  limit: 5,
-  debug: false,
-  autoComplete: true,
-  keepOpen: true,
-});
+// let geocoder = new Geocoder('nominatim', {
+//   provider: 'osm',
+//   lang: 'en',
+//   placeholder: 'Search for ...',
+//   limit: 5,
+//   debug: false,
+//   autoComplete: true,
+//   keepOpen: true,
+// });
 
 let popup = new Popup();
-map.addControl(geocoder);
+// map.addControl(geocoder);
 map.addOverlay(popup);
 
 //Listen when an address is chosen
-geocoder.on('addresschosen', function (evt) {
-  console.info(evt);
-  window.setTimeout(function () {
-    popup.show(evt.coordinate, evt.address.formatted);
-  }, 3000);
+// geocoder.on('addresschosen', function (evt) {
+//   console.info(evt);
+//   window.setTimeout(function () {
+//     popup.show(evt.coordinate, evt.address.formatted);
+//   }, 3000);
+// });
+const apiKey =
+  'AAPK5939e16922f44834a285c4f93fbd8c0fvRnmKdD61VDVk-pJNr2YR05lw3bsBseP9ypKsFv2aaaUgbKb0UcJlyLK4m2tz-89';
+const re = new RegExp(/^(\d{6}),?\s?\s*(\d{5,6})$/);
+const re_markerPosts = new RegExp(/\w+_?\s?\d+\/\d+/);
+document.getElementById('geocode-button').addEventListener('click', () => {
+  const query = document.getElementById('geocode-input').value;
+
+  const authentication = ApiKeyManager.fromKey(apiKey);
+  console.log(re.test(query));
+  if (!re.test(query) && !re_markerPosts.test(query)) {
+    const center = mapView.getCenter();
+    geocode({
+      singleLine: query,
+      authentication,
+      countryCode: 'GBR',
+
+      params: {
+        outFields: '*',
+        location: center.join(','),
+        outSR: 27700,
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        response['candidates'].forEach((candidate) => {
+          console.log(candidate.attributes.LongLabel);
+        });
+        const result = response.candidates[0];
+        if (!result === 0) {
+          alert("That query didn't match any geocoding results.");
+          return;
+        }
+
+        const coords = [result.location.x, result.location.y];
+
+        popup.show(coords, result.attributes.LongLabel);
+        // map.getView().setCenter(coords);
+        map.getView().animate({
+          center: coords,
+          zoom: Math.max(map.getView().getZoom(), 17),
+        });
+        $('.advancedAutoComplete').autoComplete('clear');
+      })
+
+      .catch((error) => {
+        alert(
+          'There was a problem using the geocoder. See the console for details.'
+        );
+        console.error(error);
+      });
+  } else if (re.test(query) && !re_markerPosts.test(query)) {
+    const x = parseInt(query.match(re)[1]);
+    const y = parseInt(query.match(re)[2]);
+
+    reverseGeocode(
+      { x: x, y: y, spatialReference: { wkid: 27700 } },
+      { authentication: authentication }
+    )
+      .then((response) => {
+        console.log(response);
+        const result = response; //.candidates[0];
+        if (!result === 0) {
+          alert("That query didn't match any geocoding results.");
+          return;
+        }
+
+        const coords = [result.location.x, result.location.y];
+
+        popup.show([x, y], result.address.LongLabel);
+        map.getView().animate({
+          center: [x, y],
+          zoom: Math.max(map.getView().getZoom(), 17),
+        });
+      })
+
+      .catch((error) => {
+        alert(
+          'There was a problem using the geocoder. See the console for details.'
+        );
+        console.error(error);
+      });
+  } else {
+    console.log('markerPost');
+  }
 });
+
+$('.advancedAutoComplete').autoComplete({
+  resolver: 'custom',
+  events: {
+    search: function (qry, callback) {
+      const center = mapView.getCenter();
+      const authentication = ApiKeyManager.fromKey(apiKey); // let's do a custom ajax call
+      if (!re.test(qry) && re_markerPosts.test(qry)) {
+        geocode({
+          singleLine: qry,
+          authentication,
+          countryCode: 'GBR',
+
+          params: {
+            outFields: '*',
+            location: center.join(','),
+            outSR: 27700,
+          },
+        })
+          .then((response) => {
+            let suggestions = [];
+            response.candidates.forEach((candidate) => {
+              suggestions.push(candidate.attributes.LongLabel);
+            });
+            callback(suggestions);
+          })
+
+          .catch((error) => {
+            alert(
+              'There was a problem using the geocoder. See the console for details.'
+            );
+            console.error(error);
+          });
+      } else {
+        console.log('markerpost!');
+        let results = [];
+        let requestJson =
+          'http://d-s4l69766:8080/geoserver/quickstats/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=quickstats%3AMarker_Posts_combined_April_2022&maxFeatures=5&outputFormat=application%2Fjson&CQL_FILTER=Road_MP_DIR%20Ilike%20%27%25' +
+          qry +
+          '%25%27&SRS=EPSG%3A27700';
+        fetch(requestJson)
+          .then((data) => {
+            return data.json();
+          })
+          .then((res) => {
+            res.features.map((feature) => {
+              results.push(feature.properties.Road_MP_DIR);
+              console.log(feature.properties.Road_MP_DIR);
+            });
+            callback(response);
+          });
+      }
+    },
+  },
+});
+$('.advancedAutoComplete2').autoComplete({
+  resolver: 'custom',
+  minLength: 2,
+  events: {
+    search: function (s, callback) {
+      var result = [];
+      if (Marker_Post_Vector_source) {
+        // regexp
+        s = s.replace(/^\*/, '');
+        var rex = new RegExp(s, 'i');
+        // The source
+        var features = Marker_Post_Vector_source.getFeatures();
+        console.log(features);
+        features.map((feature) => {
+          let res = feature.values_.Road_MP_DIR;
+          if (res !== undefined && rex.test(res)) {
+            result.push(res);
+          }
+        });
+      }
+      callback(result);
+    },
+  },
+});
+map.addLayer(marker_layer);
+const searchMarkerpost = new SearchFeature({
+  source: Marker_Post_Vector_source,
+  property: 'concatenat',
+  className: 'markerpost',
+});
+
+var select = new Select({});
+map.addInteraction(select);
+
+map.addControl(searchMarkerpost);
+searchMarkerpost.on('select', function (e) {
+  select.getFeatures().clear();
+  select.getFeatures().push(e.search);
+  var p = e.search.getGeometry().getFirstCoordinate();
+  console.log(Marker_Post_Vector_source.getFeatures());
+  map
+    .getView()
+    .animate({ center: p, zoom: Math.max(map.getView().getZoom(), 17) });
+  popup.show(
+    p,
+    'MarkerPost ' +
+      select.getFeatures().array_[0].values_.road +
+      ' ' +
+      select.getFeatures().array_[0].values_.mp_no_
+  );
+});
+
+// customSearch = function (s) {
+//   var result = [];
+//   if (this.source_) {
+//     // regexp
+//     s = s.replace(/^\*/, '');
+//     var rex = new RegExp(s, 'i');
+//     // The source
+//     var features = this.source_.getFeatures();
+//     var max = this.get('maxItems');
+//     for (var i = 0, f; (f = features[i]); i++) {
+//       var att = this.getSearchString(f);
+//       if (att !== undefined && rex.test(att)) {
+//         result.push(f);
+//         if (--max <= 0) break;
+//       }
+//     }
+//   }
+//   return result;
+// };

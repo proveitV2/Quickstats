@@ -364,3 +364,48 @@ i.icss-book:after {
   border: solid 1px black;
   display: grid;
 }
+
+/* esri geocoder */
+.esri-search {
+  display: flex;
+  position: absolute;
+  top: 12px;
+  right: 29%;
+}
+#geocode-input,
+.geocode-button,
+.dropdownMenuButton {
+  font-size: 16px;
+  margin: 0 2px 0 0;
+  padding: 4px 8px;
+}
+#geocode-input {
+  width: 550px;
+}
+/* end esri geocoder */
+
+/* Markerpost search */
+
+.markerpost {
+  
+  top: 205px !important;
+  left: 8px !important;
+}
+/* End markerpost search */
+
+.markerpost-search {
+  display: flex;
+  position: absolute;
+  top: 24px;
+  right: 58%;
+}
+#markerpost-input,
+.markerpost-button,
+.dropdownMenuButton {
+  font-size: 16px;
+  margin: 0 2px 0 0;
+  padding: 4px 8px;
+}
+#markerpost-input {
+  width: 550px;
+}

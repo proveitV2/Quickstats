@@ -10,6 +10,9 @@
     "vite": "^2.6.7"
   },
   "dependencies": {
+    "@esri/arcgis-rest-geocoding": "^4.0.2",
+    "@esri/arcgis-rest-request": "^4.0.3",
+    "bootstrap-autocomplete": "^2.3.7",
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "ol": "latest",

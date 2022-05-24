@@ -1,0 +1,205 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "Marker_Posts_combined_April_2022.27354",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          523094.2162,
+          237090.2461
+        ]
+      },
+      "geometry_name": "geom",
+      "properties": {
+        "Join_Count": 1,
+        "TARGET_FID": 27354,
+        "CalculatedMPdata_ExcelToTable2_": "Area 8",
+        "CalculatedMPdata_ExcelToTable21": "62.5",
+        "CalculatedMPdata_ExcelToTable_1": "62.5",
+        "CalculatedMPdata_ExcelToTable_2": 5,
+        "CalculatedMPdata_ExcelToTable_3": 62,
+        "class_name": "A(M)",
+        "roa_number": "A1M",
+        "sect_label": "1900A1M/8",
+        "location": "Entry Slip junction 10",
+        "start_date": "1990-01-23T00:00:00Z",
+        "s_end_date": "3000-01-01T00:00:00Z",
+        "sec_length": 650,
+        "funct_name": "Slip Road",
+        "area_name": "Area 8",
+        "direc_code": "NB",
+        "perm_lanes": 1,
+        "dual_name": "One Way Single Carriageway",
+        "envir_name": "Rural",
+        "autho_name": "Bedfordshire",
+        "reference": "7819A1/04",
+        "Formatted_MP": "62/5",
+        "Road_MP_DIR": "A1M 62/5 NB"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "Marker_Posts_combined_April_2022.27478",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          523157.3566,
+          237055.4186
+        ]
+      },
+      "geometry_name": "geom",
+      "properties": {
+        "Join_Count": 1,
+        "TARGET_FID": 27478,
+        "CalculatedMPdata_ExcelToTable2_": "Area 8",
+        "CalculatedMPdata_ExcelToTable21": "63.5",
+        "CalculatedMPdata_ExcelToTable_1": "63.5",
+        "CalculatedMPdata_ExcelToTable_2": 5,
+        "CalculatedMPdata_ExcelToTable_3": 63,
+        "class_name": "A(M)",
+        "roa_number": "A1M",
+        "sect_label": "1900A1M/7",
+        "location": "Exit Slip junction 10",
+        "start_date": "1990-01-23T00:00:00Z",
+        "s_end_date": "3000-01-01T00:00:00Z",
+        "sec_length": 577,
+        "funct_name": "Slip Road",
+        "area_name": "Area 8",
+        "direc_code": "SB",
+        "perm_lanes": 2,
+        "dual_name": "One Way Single Carriageway",
+        "envir_name": "Rural",
+        "autho_name": "Bedfordshire",
+        "reference": "7819A1/04",
+        "Formatted_MP": "63/5",
+        "Road_MP_DIR": "A1M 63/5 SB"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "Marker_Posts_combined_April_2022.28847",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          522670.4535,
+          227541.6199
+        ]
+      },
+      "geometry_name": "geom",
+      "properties": {
+        "Join_Count": 1,
+        "TARGET_FID": 28847,
+        "CalculatedMPdata_ExcelToTable2_": "Area 8",
+        "CalculatedMPdata_ExcelToTable21": "52.6",
+        "CalculatedMPdata_ExcelToTable_1": "52.6",
+        "CalculatedMPdata_ExcelToTable_2": 6,
+        "CalculatedMPdata_ExcelToTable_3": 52,
+        "class_name": "A(M)",
+        "roa_number": "A1M",
+        "sect_label": "1900A1M/36",
+        "location": "Exit Slip junction 8 Coreys Mill",
+        "start_date": "1990-01-23T00:00:00Z",
+        "s_end_date": "3000-01-01T00:00:00Z",
+        "sec_length": 515,
+        "funct_name": "Slip Road",
+        "area_name": "Area 8",
+        "direc_code": "SB",
+        "perm_lanes": 2,
+        "dual_name": "One Way Single Carriageway",
+        "envir_name": "Rural",
+        "autho_name": "Hertfordshire",
+        "reference": "7819A1/02",
+        "Formatted_MP": "52/6",
+        "Road_MP_DIR": "A1M 52/6 SB"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "Marker_Posts_combined_April_2022.28848",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          522650.0691,
+          227448.9099
+        ]
+      },
+      "geometry_name": "geom",
+      "properties": {
+        "Join_Count": 1,
+        "TARGET_FID": 28848,
+        "CalculatedMPdata_ExcelToTable2_": "Area 8",
+        "CalculatedMPdata_ExcelToTable21": "52.5",
+        "CalculatedMPdata_ExcelToTable_1": "52.5",
+        "CalculatedMPdata_ExcelToTable_2": 5,
+        "CalculatedMPdata_ExcelToTable_3": 52,
+        "class_name": "A(M)",
+        "roa_number": "A1M",
+        "sect_label": "1900A1M/36",
+        "location": "Exit Slip junction 8 Coreys Mill",
+        "start_date": "1990-01-23T00:00:00Z",
+        "s_end_date": "3000-01-01T00:00:00Z",
+        "sec_length": 515,
+        "funct_name": "Slip Road",
+        "area_name": "Area 8",
+        "direc_code": "SB",
+        "perm_lanes": 2,
+        "dual_name": "One Way Single Carriageway",
+        "envir_name": "Rural",
+        "autho_name": "Hertfordshire",
+        "reference": "7819A1/02",
+        "Formatted_MP": "52/5",
+        "Road_MP_DIR": "A1M 52/5 SB"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "Marker_Posts_combined_April_2022.28849",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          522632.5418,
+          227359.46
+        ]
+      },
+      "geometry_name": "geom",
+      "properties": {
+        "Join_Count": 1,
+        "TARGET_FID": 28849,
+        "CalculatedMPdata_ExcelToTable2_": "Area 8",
+        "CalculatedMPdata_ExcelToTable21": "52.4",
+        "CalculatedMPdata_ExcelToTable_1": "52.4",
+        "CalculatedMPdata_ExcelToTable_2": 4,
+        "CalculatedMPdata_ExcelToTable_3": 52,
+        "class_name": "A(M)",
+        "roa_number": "A1M",
+        "sect_label": "1900A1M/36",
+        "location": "Exit Slip junction 8 Coreys Mill",
+        "start_date": "1990-01-23T00:00:00Z",
+        "s_end_date": "3000-01-01T00:00:00Z",
+        "sec_length": 515,
+        "funct_name": "Slip Road",
+        "area_name": "Area 8",
+        "direc_code": "SB",
+        "perm_lanes": 2,
+        "dual_name": "One Way Single Carriageway",
+        "envir_name": "Rural",
+        "autho_name": "Hertfordshire",
+        "reference": "7819A1/02",
+        "Formatted_MP": "52/4",
+        "Road_MP_DIR": "A1M 52/4 SB"
+      }
+    }
+  ],
+  "totalFeatures": 4597,
+  "numberMatched": 4597,
+  "numberReturned": 5,
+  "timeStamp": "2022-05-23T16:13:46.409Z",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::27700"
+    }
+  }
+}
