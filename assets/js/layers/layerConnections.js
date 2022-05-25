@@ -22,23 +22,13 @@ export const Marker_Posts_combined_April_2022 = new TileLayer({
   source: new TileWMS({
     url: 'http://D-S4L69766:8080/geoserver/wms',
     params: {
-      LAYERS: 'quickstats:Marker_Posts',
+      LAYERS: 'quickstats:Marker_Posts_combined_April_2022',
       TILED: true,
     },
     serverType: 'geoserver',
     transition: 0,
   }),
   minZoom: 15,
-});
-
-export const Marker_Post_Vector_source = new Vector({
-  url: './assets/js/layers/markerposts.geojson',
-  format: new GeoJSON(),
-  projection: 'EPSG:27700',
-});
-export const marker_layer = new vectorLayer({
-  source: Marker_Post_Vector_source,
-  name: 'marker_vector',
 });
 
 export const Networked_Asset = new TileLayer({
